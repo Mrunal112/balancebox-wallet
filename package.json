@@ -1,0 +1,11 @@
+{
+  "name": "balance-box",
+  "version": "1.0.0",
+  "description": "Transaction Wallet using React, Tailwind, and MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mrunal Munjamkar",
+  "license": "ISC"
+}

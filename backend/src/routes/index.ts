@@ -1,0 +1,10 @@
+import { Router } from "express";
+import userRouter from "./userRouter";
+import accountRouter from "./accoutRouter";
+
+const router = Router();
+
+router.use("/user", userRouter);
+router.use("/account", accountRouter);
+
+export default router;
