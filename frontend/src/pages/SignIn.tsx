@@ -1,32 +1,70 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { LogIn, User, Lock, Eye, EyeOff, Loader2 } from "lucide-react";
-import { useState } from "react";
+import {
+  LogIn,
+  User,
+  Lock,
+  Eye,
+  EyeOff,
+  Loader2,
+  Terminal,
+} from "lucide-react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import $axios from "@/lib/$axios";
+import ErrorAlert from "@/components/ErrorAlert";
 
 export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => {
+        setError("");
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
 
   const handleLogin = async () => {
     setLoading(true);
 
     try {
-      const response = $axios.post("/user/login", {
+      const response = await $axios.post("/user/login", {
         username,
         password,
       });
     } catch (error) {
-      console.log("Login Failed", error);
-      setLoading(false);
+      console.log("Login Failed ", error);
+      let errorMessage = "An error occurred during login";
+
+      if (typeof error === "object" && error !== null && "response" in error) {
+        const axiosError = error as {
+          response?: { data?: { msg?: string } };
+        };
+
+        if (axiosError.response?.data?.msg) {
+          errorMessage = axiosError.response.data.msg;
+        }
+      }
+
+      setError(errorMessage);
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
+      <ErrorAlert error={error} percent={20}/>
+
       <div className="w-full max-w-sm space-y-6">
         <h1 className="text-2xl font-medium text-center">Sign In</h1>
 

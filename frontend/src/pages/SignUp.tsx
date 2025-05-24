@@ -10,9 +10,10 @@ import {
   MailIcon,
   UserCog,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import $axios from "@/lib/$axios";
+import ErrorAlert from "@/components/ErrorAlert";
 
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
@@ -22,12 +23,23 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => {
+        setError("");
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
 
   const handleLogin = async () => {
     setLoading(true);
 
     try {
-      const response = $axios.post("/user/signup", {
+      const response = await $axios.post("/user/signup", {
         username,
         password,
         firstName,
@@ -35,13 +47,30 @@ export default function SignUp() {
         email,
       });
     } catch (error) {
-      console.log("Login Failed", error);
-      setLoading(false);
+      console.log("Login Failed ", error);
+      let errorMessage = "An error occurred during login";
+
+      if (typeof error === "object" && error !== null && "response" in error) {
+        const axiosError = error as {
+          response?: { data?: { msg?: string } };
+        };
+
+        if (axiosError.response?.data?.msg) {
+          errorMessage = axiosError.response.data.msg;
+        }
+      }
+
+      setError(errorMessage);
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
+      <ErrorAlert error={error} percent={10} />
       <div className="w-full max-w-sm space-y-6">
         <h1 className="text-2xl font-medium text-center">Sign Up</h1>
 
@@ -132,7 +161,9 @@ export default function SignUp() {
           <Button
             className="w-full flex items-center justify-center gap-2"
             variant="outline"
-            disabled={!username || !password}
+            disabled={
+              !username || !password || !email || !lastName || !firstName
+            }
             onClick={handleLogin}
           >
             Sign Up
