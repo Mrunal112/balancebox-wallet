@@ -13,7 +13,14 @@ export default function SendMoney() {
   useEffect(() => {
     async function fetchUsers() {
       try {
-        const response = await $axios.get(`/user/get-users?filter=${username}`);
+        const response = await $axios.get(
+          `/user/get-users?filter=${username}`,
+          {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
         setUsers(response?.data?.users);
       } catch (error) {
         console.log("Users filter API Failed ", error);
@@ -44,7 +51,10 @@ export default function SendMoney() {
 
   return (
     <div className="px-16 pt-8">
-      <ErrorAlert error={error} setError={setError} percent={20} />
+      <div className=" ">
+        <ErrorAlert error={error} setError={setError} percent={10} />
+      </div>
+
       <div className="p-4 h-full min-h-[55vh] rounded-lg bg-slate-50 shadow-sm border-x-4 border-stone-800 space-y-4">
         <div className="text-xl font-medium">Send Money</div>
 
@@ -54,7 +64,7 @@ export default function SendMoney() {
           </div>
           <Input
             type="text"
-            placeholder="Search username...."
+            placeholder="Search user...."
             onChange={(e) => setUserName(e.target.value)}
             className="pl-10 w-full h-12 rounded-lg bg-slate-50"
           />

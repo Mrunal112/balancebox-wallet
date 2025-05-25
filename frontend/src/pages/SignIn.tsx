@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { LogIn, User, Lock, Eye, EyeOff, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import $axios from "@/lib/$axios";
 import ErrorAlert from "@/components/ErrorAlert";
 
@@ -12,6 +12,8 @@ export default function SignIn() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (error) {
@@ -31,6 +33,9 @@ export default function SignIn() {
         username,
         password,
       });
+
+      localStorage.setItem("token", response.data.token);
+      navigate("/dashboard");
     } catch (error) {
       console.log("Login Failed ", error);
       let errorMessage = "An error occurred during login";
@@ -55,7 +60,7 @@ export default function SignIn() {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
-      <ErrorAlert error={error} percent={20} setError={setError}/>
+      <ErrorAlert error={error} percent={20} setError={setError} />
 
       <div className="w-full max-w-sm space-y-6">
         <h1 className="text-2xl font-medium text-center">Sign In</h1>

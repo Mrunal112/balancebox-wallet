@@ -11,7 +11,7 @@ import {
   UserCog,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import $axios from "@/lib/$axios";
 import ErrorAlert from "@/components/ErrorAlert";
 
@@ -24,6 +24,8 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (error) {
@@ -46,6 +48,9 @@ export default function SignUp() {
         lastName,
         email,
       });
+
+      localStorage.setItem("token", response.data.token);
+      navigate("/dashboard")
     } catch (error) {
       console.log("Login Failed ", error);
       let errorMessage = "An error occurred during login";

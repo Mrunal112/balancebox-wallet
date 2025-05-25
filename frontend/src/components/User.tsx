@@ -1,13 +1,24 @@
 import { CircleUserRound, SendHorizonal } from "lucide-react";
 import { Button } from "./ui/button";
 
-export function User({ user }: { user: string }) {
+interface user {
+  firstName: string;
+  lastName: string;
+  username: string;
+}
+
+export function User({ user }: { user: user }) {
   return (
     <div className="flex justify-between items-center px-2">
       <div className="flex items-center gap-4">
         <CircleUserRound className="w-8 h-8 text-stone-800" />
-        <div className="text-xl font-light hover:underline cursor-pointer">
-          {user}
+        <div className="flex flex-col">
+          <div className="font-medium">
+            {user.firstName} {user.lastName}
+          </div>
+          <div className="font-light hover:underline cursor-pointer">
+            @{user.username}
+          </div>
         </div>
       </div>
       <div>

@@ -58,10 +58,7 @@ userRouter.post("/signup", async (req: any, res: any, next: any) => {
 
   try {
     const existingUser = await User.findOne({
-      $or: [
-        { username: data.username },
-        { email: data.email }
-      ]
+      $or: [{ username: data.username }, { email: data.email }],
     });
 
     if (existingUser) {
@@ -132,20 +129,23 @@ userRouter.put(
 userRouter.get("/get-users", authMiddleware, async (req: any, res: any) => {
   const filterValue = req.query.filter;
   try {
-    const users = await User.find({
-      $or: [
-        {
-          firstName: {
-            $regex: filterValue,
-          },
-        },
-        {
-          lastName: {
-            $regex: filterValue,
-          },
-        },
-      ],
-    });
+    const users = filterValue
+      ? await User.find({
+          $or: [
+            {
+              firstName: {
+                $regex: filterValue,
+              },
+            },
+            {
+              lastName: {
+                $regex: filterValue,
+              },
+            },
+          ],
+          username: { $ne: req.username },
+        })
+      : await User.find({ username: { $ne: req.username } });
 
     return res.status(200).json({
       users: users.map((user) => ({
