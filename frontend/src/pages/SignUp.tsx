@@ -70,7 +70,7 @@ export default function SignUp() {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
-      <ErrorAlert error={error} percent={10} />
+      <ErrorAlert error={error} percent={10} setError={setError} />
       <div className="w-full max-w-sm space-y-6">
         <h1 className="text-2xl font-medium text-center">Sign Up</h1>
 
@@ -181,3 +181,5 @@ export default function SignUp() {
     </div>
   );
 }
+
+// Add Username Password and first Name and lastname as an input component in component -> forms folder

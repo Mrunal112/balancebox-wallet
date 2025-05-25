@@ -1,14 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import {
-  LogIn,
-  User,
-  Lock,
-  Eye,
-  EyeOff,
-  Loader2,
-  Terminal,
-} from "lucide-react";
+import { LogIn, User, Lock, Eye, EyeOff, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import $axios from "@/lib/$axios";
@@ -63,7 +55,7 @@ export default function SignIn() {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
-      <ErrorAlert error={error} percent={20}/>
+      <ErrorAlert error={error} percent={20} setError={setError}/>
 
       <div className="w-full max-w-sm space-y-6">
         <h1 className="text-2xl font-medium text-center">Sign In</h1>
