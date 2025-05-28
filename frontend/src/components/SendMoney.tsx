@@ -15,11 +15,11 @@ export default function SendMoney() {
       try {
         const response = await $axios.get(
           `/user/get-users?filter=${username}`,
-          {
-            headers: {
-              authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
+          // {
+          //   headers: {
+          //     authorization: `Bearer ${localStorage.getItem("token")}`,
+          //   },
+          // }
         );
         setUsers(response?.data?.users);
       } catch (error) {
@@ -64,7 +64,7 @@ export default function SendMoney() {
           </div>
           <Input
             type="text"
-            placeholder="Search user...."
+            placeholder="Search user by name"
             onChange={(e) => setUserName(e.target.value)}
             className="pl-10 w-full h-12 rounded-lg bg-slate-50"
           />

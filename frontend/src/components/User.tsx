@@ -12,13 +12,11 @@ export function User({ user }: { user: user }) {
     <div className="flex justify-between items-center px-2">
       <div className="flex items-center gap-4">
         <CircleUserRound className="w-8 h-8 text-stone-800" />
-        <div className="flex flex-col">
+        <div className="flex flex-col cursor-pointer">
           <div className="font-medium">
             {user.firstName} {user.lastName}
           </div>
-          <div className="font-light hover:underline cursor-pointer">
-            @{user.username}
-          </div>
+          <div className="font-light hover:underline ">@{user.username}</div>
         </div>
       </div>
       <div>
