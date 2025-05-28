@@ -11,16 +11,9 @@ export default function SendMoney() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    async function fetchUsers() {
+    const timer = setTimeout(async () => {
       try {
-        const response = await $axios.get(
-          `/user/get-users?filter=${username}`,
-          // {
-          //   headers: {
-          //     authorization: `Bearer ${localStorage.getItem("token")}`,
-          //   },
-          // }
-        );
+        const response = await $axios.get(`/user/get-users?filter=${username}`);
         setUsers(response?.data?.users);
       } catch (error) {
         console.log("Users filter API Failed ", error);
@@ -45,8 +38,9 @@ export default function SendMoney() {
           setError("");
         }, 5000);
       }
-    }
-    fetchUsers();
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, [username]);
 
   return (
