@@ -8,7 +8,7 @@ const router = Router();
 router.use("/user", userRouter);
 router.use("/account", accountRouter);
 
-router.get("/authenticate-token", (req: any, res: any) => {
+router.get("/authenticate-route", (req: any, res: any) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
