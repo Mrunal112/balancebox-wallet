@@ -26,7 +26,7 @@ export function User({ user }: { user: user }) {
         <Button
           className="w-full flex items-center gap-2 bg-stone-800 text-slate-50 cursor-pointer min-w-40"
           variant="outline"
-          onClick={()=> navigate(`transfer-money/${user.username}`)}
+          onClick={()=> navigate(`transfer-money/${user.username}/${user.firstName}/${user.lastName}`)}
         >
           Send Money <SendHorizonal />
         </Button>

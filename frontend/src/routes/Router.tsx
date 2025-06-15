@@ -18,7 +18,10 @@ const router = createBrowserRouter([
         element: <MainLayout />,
         children: [
           { index: true, element: <HomePage /> },
-          { path: "transfer-money/:userid", element: <TransferMoney /> },
+          {
+            path: "transfer-money/:userid/:firstName/:lastName",
+            element: <TransferMoney />,
+          },
         ],
       },
     ],
