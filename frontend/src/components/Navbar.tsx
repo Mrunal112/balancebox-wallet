@@ -14,7 +14,12 @@ export default function Navbar() {
   const navigate = useNavigate();
   return (
     <div className="flex justify-between items-center text-cyan-100 px-16 py-4 bg-stone-800">
-      <div className="flex items-center text-2xl font-medium cursor-pointer gap-1">
+      <div
+        className="flex items-center text-2xl font-medium cursor-pointer gap-1"
+        onClick={() => {
+          navigate("/");
+        }}
+      >
         <WalletMinimal className="text-rose-300" /> BalanceBox-Wallet
       </div>
       <div className="flex text-xl font-small cursor-pointer gap-4">

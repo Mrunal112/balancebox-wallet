@@ -34,7 +34,7 @@ accountRouter.post("/transfer", authMiddleware, async (req: any, res: any) => {
 
     if (!senderAccount || senderAccount.balance < amount) {
       await session.abortTransaction();
-      return res.status(400).json({
+      return res.status(200).json({
         msg: "Insufficient Balance",
       });
     }
@@ -62,7 +62,7 @@ accountRouter.post("/transfer", authMiddleware, async (req: any, res: any) => {
 
     await session.commitTransaction();
 
-    return res.status(411).json({
+    return res.status(200).json({
       msg: "Transfer Successful",
     });
   } catch (error) {

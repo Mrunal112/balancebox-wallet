@@ -26,9 +26,6 @@ export default function Balance() {
   useEffect(() => {
     async function getBalance() {
       const response = await $axios.get("/account/balance", {
-        // headers: {
-        //   authorization: `Bearer ${localStorage.getItem("token")}`,
-        // },
       });
       setBalance(thousandSeperator(response.data.balance));
     }

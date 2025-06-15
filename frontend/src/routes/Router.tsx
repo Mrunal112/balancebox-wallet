@@ -4,14 +4,27 @@ import SignIn from "@/pages/SignIn";
 import { createBrowserRouter } from "react-router-dom";
 import PrivateRoute from "@/auth/PrivatePage";
 import PublicRoute from "@/auth/PublicPage";
+import { TransferMoney } from "@/pages/TransferMoney";
+import MainLayout from "@/layouts/Layout";
 
 const SignUp = lazy(() => import("@/pages/SignUp"));
 
 const router = createBrowserRouter([
   {
-    // path: "/",
     element: <PrivateRoute />,
-    children: [{ path: "/dashboard", element: <HomePage /> }],
+    children: [
+      {
+        path: "/",
+        element: <MainLayout />,
+        children: [
+          { index: true, element: <HomePage /> },
+          {
+            path: "transfer-money/:userid/:firstName/:lastName",
+            element: <TransferMoney />,
+          },
+        ],
+      },
+    ],
   },
   {
     element: <PublicRoute />,

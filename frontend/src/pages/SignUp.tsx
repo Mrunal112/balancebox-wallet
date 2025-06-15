@@ -50,7 +50,7 @@ export default function SignUp() {
       });
 
       localStorage.setItem("token", response.data.token);
-      navigate("/dashboard")
+      navigate("/")
     } catch (error) {
       console.log("Login Failed ", error);
       let errorMessage = "An error occurred during login";
