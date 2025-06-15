@@ -6,6 +6,7 @@ import PrivateRoute from "@/auth/PrivatePage";
 import PublicRoute from "@/auth/PublicPage";
 import { TransferMoney } from "@/pages/TransferMoney";
 import MainLayout from "@/layouts/Layout";
+import { TransferDetails } from "@/pages/TransferDetails";
 
 const SignUp = lazy(() => import("@/pages/SignUp"));
 
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
           {
             path: "transfer-money/:userid/:firstName/:lastName",
             element: <TransferMoney />,
+          },
+          {
+            path: "transfer-details",
+            element: <TransferDetails />,
           },
         ],
       },

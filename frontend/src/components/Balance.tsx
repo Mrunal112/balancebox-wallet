@@ -2,6 +2,7 @@ import $axios from "@/lib/$axios";
 import { TrendingUp, WalletMinimal } from "lucide-react";
 import { useEffect, useState } from "react";
 import thousandSeperator from "@/functions/ThousandSeperator";
+import { useNavigate } from "react-router-dom";
 
 export default function Balance() {
   const allMonths = [
@@ -22,11 +23,11 @@ export default function Balance() {
   const date = new Date();
   const month = allMonths[date.getMonth()];
   const [balance, setBalance] = useState("-");
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function getBalance() {
-      const response = await $axios.get("/account/balance", {
-      });
+      const response = await $axios.get("/account/balance", {});
       setBalance(thousandSeperator(response.data.balance));
     }
     getBalance();
@@ -46,7 +47,7 @@ export default function Balance() {
       <div className="bg-slate-50 flex items-center justify-between w-full max-w-lg rounded-b-lg shadow-sm px-4 py-3 hover:px-3 cursor-pointer hover:underline transition-all duration-300 ease-in-out">
         <div className="flex gap-2 items-center">
           <TrendingUp />
-          View {month}'s Transaction
+          <div onClick={() => navigate("transfer-details")}>View {month}'s Transaction</div>
         </div>
         <div>
           <WalletMinimal />
